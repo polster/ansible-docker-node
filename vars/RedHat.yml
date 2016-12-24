@@ -1,0 +1,8 @@
+---
+
+# The docker daemon name
+ansible_docker_node_docker_daemon_name: "docker"
+
+# The docker group being allowed to manage docker
+# without sudo privileges
+ansible_docker_node_docker_group: "docker"

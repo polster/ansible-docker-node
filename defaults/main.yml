@@ -1,0 +1,12 @@
+---
+
+# The expected docker version
+ansible_docker_node_docker_version: "1.12.5"
+
+# Downloads and runs the hello-world Docker image as a
+# smoke test to verify Docker installation
+ansible_docker_node_check_run_hello_world: true
+
+# Local users being allowed to manage containers without
+# requiring sudo
+ansible_docker_node_docker_users: []

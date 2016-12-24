@@ -1,0 +1,22 @@
+# Docker daemon handler
+---
+
+- name: Reload daemon config
+  shell: "systemctl daemon-reload"
+
+- name: Restart docker
+  service:
+    name: "{{ ansible_docker_node_docker_daemon_name }}"
+    state: restarted
+
+- name: Run hello-world check
+  shell: "docker run hello-world"
+  register: docker_check_hello_world
+  changed_when: False
+  when: ansible_docker_node_check_run_hello_world
+
+- name: Assert hello-world check was successful
+  assert:
+    that:
+      - "'Hello from Docker' in docker_check_hello_world.stdout"
+  when: ansible_docker_node_check_run_hello_world
