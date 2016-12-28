@@ -1,0 +1,14 @@
+---
+
+- name: Enable local users for docker management witout sudo
+  user:
+    name: "{{ item }}"
+    groups: "{{ ansible_docker_node_docker_group }}"
+    append: yes
+  with_items: "{{ ansible_docker_node_docker_users }}"
+  when: ansible_docker_node_docker_users
+
+- name: Ensure the docker daemon starts at boot
+  service:
+    name: "{{ ansible_docker_node_docker_daemon_name }}"
+    enabled: yes

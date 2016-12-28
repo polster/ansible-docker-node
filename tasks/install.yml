@@ -1,0 +1,25 @@
+---
+
+- name: Register Docker command info
+  shell: command -v docker >/dev/null 2>&1 || { echo "1"; }
+  register: docker_command_info
+  changed_when: False
+
+- name: Register Docker version info
+  shell: docker --version
+  register: docker_version_info
+  when: docker_command_info.stdout != '1'
+  changed_when: False
+
+- name: Register Docker install trigger
+  shell: echo 1
+  register: install_trigger
+  when: docker_version_info|skipped or docker_version_info.stdout.find('{{ ansible_docker_node_docker_version }}') == -1
+
+- name: Install Docker via script (adds repo and installs docker)
+  shell: "curl -sSL https://get.docker.com/ | sed 's/lxc-docker/lxc-docker-{{ ansible_docker_node_docker_version }}/' | sh"
+  notify:
+    - Restart docker
+    - Run hello-world check
+    - Assert hello-world check was successful
+  when: install_trigger|changed
