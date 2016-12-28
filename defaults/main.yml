@@ -7,6 +7,13 @@ ansible_docker_node_docker_version: "1.12.5"
 # smoke test to verify Docker installation
 ansible_docker_node_check_run_hello_world: true
 
+# Perform Docker daemon socket access test
+ansible_docker_node_check_socket_access: true
+
 # Local users being allowed to manage containers without
 # requiring sudo
 ansible_docker_node_docker_users: []
+
+# Allows to override the default Docker daemon options.
+# See https://docs.docker.com/engine/admin/#/configuring-docker-1 for more details
+ansible_docker_node_docker_opts: ""

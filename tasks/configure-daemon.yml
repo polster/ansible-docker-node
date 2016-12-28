@@ -1,0 +1,17 @@
+# Custom Docker daemon configuration.
+---
+
+- name: Ensure the custom Docker daemon config location exists
+  file:
+    path: "{{ ansible_docker_node_docker_config_path }}"
+    state: directory
+
+- name: Deploy custom Docker daemon config
+  template:
+    src: "docker.conf.j2"
+    dest: "{{ ansible_docker_node_docker_config_path }}/docker.conf"
+  notify:
+    - Reload daemon config
+    - Restart docker
+    - Run socket access check
+    - Assert socket access check was successful

@@ -6,3 +6,6 @@ ansible_docker_node_docker_daemon_name: "docker"
 # The docker group being allowed to manage docker
 # without sudo privileges
 ansible_docker_node_docker_group: "docker"
+
+# The path to the Docker daemon custom config
+ansible_docker_node_docker_config_path: "/etc/systemd/system/docker.service.d"

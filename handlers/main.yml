@@ -10,7 +10,7 @@
     state: restarted
 
 - name: Run hello-world check
-  shell: "docker run hello-world"
+  shell: "docker {{ ansible_docker_node_docker_opts }} run hello-world"
   register: docker_check_hello_world
   changed_when: False
   when: ansible_docker_node_check_run_hello_world
@@ -20,3 +20,15 @@
     that:
       - "'Hello from Docker' in docker_check_hello_world.stdout"
   when: ansible_docker_node_check_run_hello_world
+
+- name: Run socket access check
+  shell: "docker {{ ansible_docker_node_docker_opts }} version"
+  register: docker_check_socket_access
+  changed_when: False
+  when: ansible_docker_node_check_socket_access
+
+- name: Assert socket access check was successful
+  assert:
+    that:
+      - "docker_check_socket_access.rc == 0"
+  when: ansible_docker_node_check_socket_access
