@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Simon Dietschi
+  company: Tinkers
   description: Docker role for Ansible
   license: MIT
   min_ansible_version: 2.1
